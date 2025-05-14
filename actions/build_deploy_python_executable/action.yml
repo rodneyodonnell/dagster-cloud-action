@@ -29,6 +29,10 @@ runs:
   using: "composite"
 
   steps:
+    - name: Say Hello
+      run: echo "Hello, world! v0.001"
+      shell: bash
+
     - name: Set ACTION_REPO
       run: >
         echo "ACTION_REPO=$GITHUB_ACTION_PATH/../../" >> $GITHUB_ENV
@@ -56,6 +60,33 @@ runs:
 
     - run: >
         echo SOURCE_DIRECTORY=$(dirname ${{ inputs.dagster_cloud_file }}) >> $GITHUB_ENV
+      shell: bash
+
+    # Print out contents of various dirs
+    - name: Print out contents of various dirs
+      run: |
+        echo ""
+        echo "Current directory:"
+        pwd 
+        ls -la
+        echo ""    
+        echo "Contents of SOURCE_DIRECTORY ($SOURCE_DIRECTORY):"
+        ls -la $SOURCE_DIRECTORY
+        echo ""
+        echo "Contents of ACTION_REPO ($ACTION_REPO):"
+        ls -la $ACTION_REPO
+        echo ""
+        echo "Contents of GITHUB_ACTION_PATH ($GITHUB_ACTION_PATH):"
+        ls -la $GITHUB_ACTION_PATH
+        echo ""
+        echo "Contents of GITHUB_WORKSPACE ($GITHUB_WORKSPACE):"
+        ls -la $GITHUB_WORKSPACE
+        echo ""
+        echo "Contents of GITHUB_WORKSPACE/project-repo ($GITHUB_WORKSPACE/project-repo):"
+        ls -la $GITHUB_WORKSPACE/project-repo
+        echo ""
+        echo "full env:"
+        env
       shell: bash
 
     - if: ${{ inputs.deploy == 'true' }}

@@ -25,6 +25,7 @@ UPDATE_COMMENT_SCRIPT_PATH = Path(__file__).parent / "create_or_update_comment.p
 
 
 def main():
+    print("### rodo: in main")
     args = sys.argv[1:]
 
     if os.getenv("GITHUB_EVENT_NAME") == "pull_request":
@@ -114,6 +115,7 @@ def get_branch_deployment_name(project_dir):
 
 
 def deploy_pex(args, branch_deployment_name: Optional[str], build_method: str):
+    print("### rodo: in deploy_pex")
     dagster_cloud_yaml = args.pop(0)
     args.insert(0, os.path.dirname(dagster_cloud_yaml))
     args = args + [f"--build-method={build_method}"]
